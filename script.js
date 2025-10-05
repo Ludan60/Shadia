@@ -161,8 +161,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();
+
+      // Validate form before submitting
+      if (!validateForm('contactForm')) {
+        showToast('يرجى ملء جميع الحقول المطلوبة', 'error');
+        return;
+      }
     
       const formData = new FormData(form);
+      const now = new Date();
+const khartoumTime = now.toLocaleString('en-GB', { timeZone: 'Africa/Khartoum' });
+formData.append("timestamp", khartoumTime);
       const params = new URLSearchParams(formData);
     
       fetch("https://script.google.com/macros/s/AKfycbyt5HJl_VOqhPaBcV_GICHwDyJZ9NAWekX45Ui0YRRz8OPTxRIRURAfY0tmvDtQL5QdVQ/exec", {
